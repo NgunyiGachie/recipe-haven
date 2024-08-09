@@ -1,10 +1,18 @@
 from sqlalchemy.orm import validates
+from sqlalchemy_serializer import SerializerMixin
 
 from database import db
 
 
-class Rating(db.Model):
+class Rating(db.Model, SerializerMixin):
     __tablename__ = "ratings"
+
+    serialize_rules = (
+        "-user.ratings",
+        "-recipe.ratings",
+        "-user.recipes",
+        "-recipe.user",
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
@@ -16,6 +24,6 @@ class Rating(db.Model):
 
     @validates("rating")
     def validate_rating(self, key, value):
-        if value < 1 or value > 5:
-            raise ValueError("Rating must be an integer between 1 and 5.")
+        if value < 0 or value > 5:
+            raise ValueError("Rating must be an integer between 0 and 5.")
         return value

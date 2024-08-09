@@ -3,6 +3,7 @@ from models.cookinghacks import CookingHacks
 from models.cookingtips import CookingTips
 from models.images import Image
 from models.ingredients import Ingredient
+from models.news import News
 from models.rating import Rating
 from models.recipe import Recipe
 from models.replies import Replies

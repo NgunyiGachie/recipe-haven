@@ -12,6 +12,9 @@ class LinkBookmarkToUser(Resource):
     def post(self, recipe_id):
         user_id = get_jwt_identity()
 
+        if not user_id:
+            make_response(jsonify({"message": "You have to be a user to bookmark"}))
+
         existing_bookmark = Bookmark.query.filter_by(
             user_id=user_id, recipe_id=recipe_id
         ).first()

@@ -16,6 +16,11 @@ class Recipe(db.Model, SerializerMixin):
         "-image.recipe",
         "-ratings.recipe",
         "-bookmarks.recipe",
+        "-user.bookmarks",
+        "-user.ratings",
+        "-ratings.user",
+        "-review.recipe",
+        "-review.user",
     )
 
     id = db.Column(db.Integer, primary_key=True)
@@ -42,6 +47,9 @@ class Recipe(db.Model, SerializerMixin):
     )
     bookmarks = db.relationship(
         "Bookmark", back_populates="recipe", cascade="all, delete-orphan"
+    )
+    reviews = db.relationship(
+        "Review", back_populates="recipe", cascade="all, delete-orphan", lazy="dynamic"
     )
 
     @validates("title", "description", "instructions", "country", "diet")

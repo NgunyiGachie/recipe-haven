@@ -10,9 +10,10 @@ from resources.cookinghacks import CookingHack  # noqa: F401
 from resources.cookingtips import CookingTip  # noqa: F401
 from resources.images import Image  # noqa: F401
 from resources.ingredients import Ingredient  # noqa: F401
-from resources.rating import Ratings  # noqa: F401
+from resources.news import NewsById, NewsResource
+from resources.rating import RateArecipe  # noqa: F401
 from resources.recipe import RecipeByID, RecipeResource  # noqa: F401
-from resources.review import Reviews  # noqa: F401
+from resources.review import LinkingReviewtoRecipe, UpdateReview  # noqa: F401
 from resources.user import Login, Profile, UserRegister
 
 
@@ -34,6 +35,11 @@ def create_app():
     api.add_resource(RecipeResource, "/recipes", endpoint="recipes")
     api.add_resource(RecipeByID, "/recipes/<int:id>", endpoint="recipes_by_id")
     api.add_resource(LinkBookmarkToUser, "/bookmark/<int:recipe_id>")
+    api.add_resource(RateArecipe, "/rate/<int:recipe_id>")
+    api.add_resource(LinkingReviewtoRecipe, "/review/<int:recipe_id>")
+    api.add_resource(UpdateReview, "/review/<int:review_id>/<int:recipe_id>")
+    api.add_resource(NewsResource, "/news")
+    api.add_resource(NewsById, "/news/<int:news_id>")
     return app
 
 

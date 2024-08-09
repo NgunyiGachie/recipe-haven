@@ -1,6 +1,6 @@
-from flask import jsonify, make_response
+from flask import jsonify, make_response, request
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
-from flask_restful import Resource, reqparse
+from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 from database import db
@@ -14,27 +14,14 @@ USER_DELETED = "User deleted."
 INVALID_CREDENTIALS = "Invalid credentials!"
 USER_LOGGED_OUT = "User <id={user_id}> successfully logged out."
 
-_user_parser = reqparse.RequestParser()
-_user_parser.add_argument(
-    "username", type=str, required=True, help=BLANK_ERROR.format("username")
-)
-_user_parser.add_argument(
-    "password", type=str, required=True, help=BLANK_ERROR.format("password")
-)
-_user_parser.add_argument(
-    "email", type=str, required=True, help=BLANK_ERROR.format("email")
-)
-_user_parser.add_argument(
-    "first_name", type=str, required=True, help=BLANK_ERROR.format("first name")
-)
-_user_parser.add_argument(
-    "last_name", type=str, required=True, help=BLANK_ERROR.format("last name")
-)
-
 
 class UserRegister(Resource):
     def post(self):
-        data = _user_parser.parse_args()
+        data = request.form
+
+        for field in ["username", "password", "email", "first_name", "last_name"]:
+            if not data.get(field):
+                return make_response({"message": BLANK_ERROR.format(field)}, 400)
 
         try:
             user = User(
@@ -43,7 +30,7 @@ class UserRegister(Resource):
                 first_name=data["first_name"],
                 last_name=data["last_name"],
             )
-            user.password_hash = data["password"]  # The setter will handle hashing
+            user.password_hash = data["password"]
 
             db.session.add(user)
             db.session.commit()
@@ -79,31 +66,24 @@ class Profile(Resource):
         current_user = get_jwt_identity()
         user = User.query.get_or_404(current_user)
 
-        update_parser = reqparse.RequestParser()
-        update_parser.add_argument("username", type=str, required=False)
-        update_parser.add_argument("email", type=str, required=False)
-        update_parser.add_argument("first_name", type=str, required=False)
-        update_parser.add_argument("last_name", type=str, required=False)
-        update_parser.add_argument("password", type=str, required=False)
-        update_parser.add_argument("bio", type=str, required=False)
+        data = request.form
 
-        data = update_parser.parse_args()
+        # Update user fields if provided in the form data
         try:
-            if data["username"]:
+            if data.get("username"):
                 user.username = data["username"]
-            if data["email"]:
+            if data.get("email"):
                 user.email = data["email"]
-            if data["first_name"]:
+            if data.get("first_name"):
                 user.first_name = data["first_name"]
-            if data["last_name"]:
+            if data.get("last_name"):
                 user.last_name = data["last_name"]
-            if data["bio"]:
-                user.last_name = data["bio"]
-            if data["password"]:
+            if data.get("bio"):
+                user.bio = data["bio"]
+            if data.get("password"):
                 user.password_hash = data["password"]
 
             db.session.commit()
-
         except ValueError as e:
             return make_response({"message": str(e)}, 400)
         except IntegrityError:
@@ -117,16 +97,13 @@ class Profile(Resource):
 
 
 class Login(Resource):
-    _login_parser = reqparse.RequestParser()
-    _login_parser.add_argument(
-        "username", type=str, required=True, help=BLANK_ERROR.format("username")
-    )
-    _login_parser.add_argument(
-        "password", type=str, required=True, help=BLANK_ERROR.format("password")
-    )
-
     def post(self):
-        data = self._login_parser.parse_args()
+        data = request.form
+
+        for field in ["username", "password"]:
+            if not data.get(field):
+                return make_response({"message": BLANK_ERROR.format(field)}, 400)
+
         user = User.query.filter_by(username=data["username"]).first()
 
         if user and user.authenticate(data["password"]):
