@@ -18,8 +18,8 @@ class User(db.Model, SerializerMixin):
         "-bookmarks.user",
         "-_password_hash",
         "-ratings.recipe",
-        "-review.user",
-        "-review.recipe",
+        "-reviews.user",
+        "-reviews.recipe",
     )
 
     id = db.Column(db.Integer, primary_key=True)
@@ -35,18 +35,10 @@ class User(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     is_admin = db.Column(db.Boolean, default=False)
 
-    recipes = db.relationship(
-        "Recipe", back_populates="user", lazy="dynamic", cascade="all, delete-orphan"
-    )
-    ratings = db.relationship(
-        "Rating", back_populates="user", cascade="all, delete-orphan", lazy="dynamic"
-    )
-    bookmarks = db.relationship(
-        "Bookmark", back_populates="user", cascade="all, delete-orphan", lazy="dynamic"
-    )
-    reviews = db.relationship(
-        "Review", back_populates="user", cascade="all, delete-orphan", lazy="dynamic"
-    )
+    recipes = db.relationship("Recipe", back_populates="user", lazy="dynamic", cascade="all, delete-orphan")
+    ratings = db.relationship("Rating", back_populates="user", cascade="all, delete-orphan", lazy="dynamic")
+    bookmarks = db.relationship("Bookmark", back_populates="user", cascade="all, delete-orphan", lazy="dynamic")
+    reviews = db.relationship("Review", back_populates="user", cascade="all, delete-orphan", lazy="dynamic")
 
     @hybrid_property
     def password_hash(self):

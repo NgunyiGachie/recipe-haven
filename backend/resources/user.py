@@ -3,8 +3,8 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
-from database import db
-from models import User
+from backend.database import db
+from backend.models.user import User
 
 BLANK_ERROR = "'{}' cannot be blank."
 USER_ALREADY_EXISTS = "A user with that username or email already exists."

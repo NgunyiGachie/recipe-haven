@@ -19,11 +19,12 @@ class Recipe(db.Model):
     skill_level = db.Column(db.String(100))
     created_at = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)
 
-    user = db.relationship('User', back_populates='recipe')
-    ingredient = db.relationship('Ingredient', back_populates='recipe')
-    image = db.relationship('Image', back_populates='recipe', cascade='all, delete-orphan')
+    user = db.relationship('User', back_populates='recipes')
+    ingredients = db.relationship('Ingredient', back_populates='recipes')
+    images = db.relationship('Image', back_populates='recipes', cascade='all, delete-orphan')
     ratings = db.relationship("Rating", back_populates="recipe", cascade="all, delete-orphan")
     bookmarks = db.relationship("Bookmark", back_populates="recipe", cascade="all, delete-orphan")
+    reviews = db.relationship("Review", back_populates="recipe", cascade="all, delete-orphan")
 
     @validates('title', 'description', 'instructions', 'country', 'diet')
     def validate_strings(self, key, value):

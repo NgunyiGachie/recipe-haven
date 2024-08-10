@@ -1,6 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 
-from database import db
+from backend.database import db
 
 
 class Bookmark(db.Model, SerializerMixin):

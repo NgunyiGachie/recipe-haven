@@ -1,8 +1,8 @@
 from flask import jsonify, make_response, request
 from flask_restful import Resource
 
-from database import db
-from models import News
+from backend.database import db
+from backend.models.news import News
 
 
 class NewsResource(Resource):

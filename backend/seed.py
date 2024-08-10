@@ -9,8 +9,14 @@ from backend.models.ingredients import Ingredient
 from backend.models.recipes import Recipe
 from backend.models.replies import Replies
 from backend.models.review import Review
+from backend.models.bookmark import Bookmark
+from backend.models.news import News
+from backend.models.rating import Rating  
 from backend.app import app
 from backend.config import config
+from flask_bcrypt import Bcrypt
+
+bcrypt = Bcrypt()
 
 config_name = os.getenv('FLASK_CONFIG', 'default')
 app.config.from_object(config[config_name])
@@ -19,14 +25,29 @@ with app.app_context():
     db.drop_all()
     db.create_all()
 
-    users = [User(id=1), User(id=2), User(id=3), User(id=4), User(id=5)]
+    users = [
+        User(username='user1', first_name='Anthony', last_name='Gachie', email='user1@example.com', country='Kenya'),
+        User(username='user2', first_name='Ben', last_name='Gitau', email='user2@example.com', country='Uganda'),
+        User(username='user3', first_name='Audrey', last_name='Cherop', email='user3@example.com', country='Congo'),
+        User(username='user4', first_name='Bryan', last_name='Odongo', email='user4@example.com', country='Tanzania'),
+        User(username='user5', first_name='Brian', last_name='Kipkirui', email='user5@example.com', country='Rwanda'),
+    ]
+    
+    for user, password in zip(users, ['password1', 'password2', 'password3', 'password4', 'password5']):
+        user.password_hash = password 
+  
     db.session.add_all(users)
     db.session.commit()
 
-    reviews = [Review(id=1), Review(id=2), Review(id=3), Review(id=4)]
+    reviews = [
+        Review(id=1, user_id=1, recipe_id=1, review='Great recipe!', created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')),
+        Review(id=2, user_id=2, recipe_id=1, review='Tasty, but could use more spices.', created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')),
+        Review(id=3, user_id=3, recipe_id=2, review='Delicious and easy to make!', created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')),
+        Review(id=4, user_id=4, recipe_id=2, review='Too spicy for my taste.', created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')),
+    ]
     db.session.add_all(reviews)
     db.session.commit()
-    
+
     recipes = [
         Recipe(
             user_id=1,
@@ -40,7 +61,7 @@ with app.app_context():
             diet='Vegetarian',
             banner_image='http://example.com/spaghetti.jpg',
             skill_level='Medium',
-            created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')  
+            created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')
         ),
         Recipe(
             user_id=2,
@@ -54,7 +75,7 @@ with app.app_context():
             diet='Non-Vegetarian',
             banner_image='http://example.com/curry.jpg',
             skill_level='Hard',
-            created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')  
+            created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')
         ),
     ]
     db.session.add_all(recipes)
@@ -72,14 +93,14 @@ with app.app_context():
         CookingTips(
             title='How to cook perfect rice',
             content='Rinse rice before cooking. Use a 1:2 rice-to-water ratio.',
-            created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S'),  
-            updated_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')  
+            created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S'),
+            updated_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')
         ),
         CookingTips(
             title='Tips for baking bread',
             content='Use room temperature ingredients. Don\'t overmix the dough.',
-            created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S'),  
-            updated_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')  
+            created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S'),
+            updated_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')
         ),
     ]
     db.session.add_all(cooking_tips)
@@ -113,3 +134,29 @@ with app.app_context():
     db.session.add_all(replies)
     db.session.commit()
     print("Replies seeded successfully.")
+
+    bookmarks = [
+        Bookmark(id=1, user_id=1, recipe_id=1),
+        Bookmark(id=2, user_id=2, recipe_id=2),
+    ]
+    db.session.add_all(bookmarks)
+    db.session.commit()
+    print("Bookmarks seeded successfully.")
+
+    news_items = [
+        News(id=1, image_url='http://example.com/news1.jpg', content='Breaking: New recipe trends for 2024!', link='http://example.com/news1'),
+        News(id=2, image_url='http://example.com/news2.jpg', content='Top 10 kitchen gadgets you need to try.', link='http://example.com/news2'),
+    ]
+    db.session.add_all(news_items)
+    db.session.commit()
+    print("News seeded successfully.")
+
+    ratings = [
+        Rating(id=1, user_id=1, recipe_id=1, rating=4),
+        Rating(id=2, user_id=2, recipe_id=1, rating=3),
+        Rating(id=3, user_id=3, recipe_id=2, rating=5),
+        Rating(id=4, user_id=4, recipe_id=2, rating=2),
+    ]
+    db.session.add_all(ratings)
+    db.session.commit()
+    print("Ratings seeded successfully.")
