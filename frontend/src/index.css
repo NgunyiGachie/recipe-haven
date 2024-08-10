@@ -3,3 +3,39 @@
 @tailwind utilities;
 
 /* START STYLING ON THE NEXT LINE (6) */
+
+/* Header and Search */
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  color: #4a4a4a;
+  transition: color 0.3s ease;
+}
+
+.nav-link::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 4px;
+  bottom: -4px;
+  left: 0;
+  background-color: #34d399;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-link:hover::before,
+.nav-link-active::before {
+  visibility: visible;
+  width: 100%;
+}
+
+.nav-link-active {
+  color: #4a4a4a;
+  border-bottom: 4px solid #34d399;
+}
+
+.text-stroke {
+  -webkit-text-stroke: 2.5px rgb(39, 51, 42);
+  color: transparent;
+}

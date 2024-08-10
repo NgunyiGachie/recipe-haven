@@ -4,11 +4,14 @@ from flask_migrate import Migrate
 db = SQLAlchemy()
 migrate = Migrate()
 
-from .user import User
-from .recipes import Recipe
-from .ingredients import Ingredient
-from .replies import Replies
-from .cookinghacks import CookingHacks
-from .cookingtips import CookingTips
-from .images import Image
-from .review import Review
+from models.user import User
+from models.recipe import Recipe
+from models.ingredients import Ingredient
+from models.replies import Replies
+from models.cookinghacks import CookingHacks
+from models.cookingtips import CookingTips
+from models.images import Image
+from models.review import Review
+from models.bookmark import Bookmark
+from models.news import News
+from models.rating import Rating
