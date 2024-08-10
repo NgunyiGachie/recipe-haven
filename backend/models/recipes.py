@@ -15,7 +15,7 @@ class Recipe(db.Model):
     cook_time = db.Column(db.Integer, nullable=False)
     servings = db.Column(db.Integer, nullable=False)
     diet = db.Column(db.String(100), nullable=False)
-    image_url = db.Column(db.String(255), nullable=False)
+    banner_image = db.Column(db.String(255), nullable=False)
     skill_level = db.Column(db.String(100))
     created_at = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)
 
@@ -61,7 +61,7 @@ class Recipe(db.Model):
             'cook_time': self.cook_time,
             'servings': self.servings,
             'diet': self.diet,
-            'image_url': self.image_url,
+            'banner_image': self.banner_image,
             'skill_level': self.skill_level,
             'created_at': self.created_at.isoformat() if self.created_at else None
         }

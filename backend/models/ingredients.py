@@ -8,7 +8,7 @@ class Ingredient(db.Model):
     name = db.Column(db.String(100), nullable=False)
     image = db.Column(db.String(255))
 
-    recipe = db.Relationship('Recipe', back_populates='ingredient')
+    recipe = db.relationship('Recipe', back_populates='ingredient')
 
     @validates('name')
     def validate_name(self, key, value):

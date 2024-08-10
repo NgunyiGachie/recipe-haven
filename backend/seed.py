@@ -38,7 +38,7 @@ with app.app_context():
             cook_time=20,
             servings=4,
             diet='Vegetarian',
-            image_url='http://example.com/spaghetti.jpg',
+            banner_image='http://example.com/spaghetti.jpg',
             skill_level='Medium',
             created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')  
         ),
@@ -52,7 +52,7 @@ with app.app_context():
             cook_time=40,
             servings=4,
             diet='Non-Vegetarian',
-            image_url='http://example.com/curry.jpg',
+            banner_image='http://example.com/curry.jpg',
             skill_level='Hard',
             created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')  
         ),

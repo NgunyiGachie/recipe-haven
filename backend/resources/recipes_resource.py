@@ -1,9 +1,11 @@
 from datetime import datetime
 from flask import jsonify, request, make_response
+import json
 from flask_restful import Resource
 from backend.models.recipes import Recipe
 from backend.models.ingredients import Ingredient
 from backend.models.images import Image
+from backend.utils import save_image
 from backend.database import db
 
 class RecipeResource(Resource):
@@ -31,11 +33,15 @@ class RecipeResource(Resource):
             cook_time = int(request.form.get('cook_time', 0))
             servings = int(request.form.get('servings', 0))
             diet = request.form.get('diet')
-            image_url = request.form.get('image_url')
             skill_level = request.form.get('skill_level')
 
-            ingredients = request.form.getlist('ingredients')
-            image_urls = request.form.getlist('image_urls')
+            banner_image_file = request.files.get('banner_image')
+            if not banner_image_file:
+                return jsonify({"error": "banner_image is required"}), 400
+            
+            banner_image = save_image(banner_image_file)
+            if not banner_image:
+                return jsonify({"error": "Failed to save banner_image"}), 400
 
             new_recipe = Recipe(
                 user_id=user_id,
@@ -47,7 +53,7 @@ class RecipeResource(Resource):
                 cook_time=cook_time,
                 servings=servings,
                 diet=diet,
-                image_url=image_url,
+                banner_image=banner_image,
                 skill_level=skill_level,
                 created_at=created_at
             )
@@ -55,17 +61,39 @@ class RecipeResource(Resource):
             db.session.add(new_recipe)
             db.session.commit()
 
-            for ingredient_name in ingredients:
-                ingredient = Ingredient(name=ingredient_name, recipe_id=new_recipe.id)
+            ingredients_data = request.form.getlist('ingredients')
+            for ingredient_str in ingredients_data:
+                ingredient_data = json.loads(ingredient_str)  
+                ingredient_name = ingredient_data.get('name')
+                ingredient_image_file = request.files.get(f'{ingredient_name}_image')
+
+                ingredient_image_url = save_image(ingredient_image_file) if ingredient_image_file else None
+
+                ingredient = Ingredient(
+                    recipe_id=new_recipe.id,
+                    name=ingredient_name,
+                    image=ingredient_image_url
+                )
                 db.session.add(ingredient)
 
-            for image_url in image_urls:
-                image = Image(url=image_url, recipe_id=new_recipe.id)
-                db.session.add(image)
+            # Handling additional images
+            image_files = request.files.getlist('images')
+            for image_file in image_files:
+                image_url = save_image(image_file)
+                if image_url:
+                    image = Image(
+                        recipe_id=new_recipe.id,
+                        image_url=image_url
+                    )
+                    db.session.add(image)
+
+            db.session.commit()
 
             response_dict = new_recipe.to_dict()
-            response = make_response(jsonify(response_dict), 201)
-            return response
+            return make_response(
+                jsonify(response_dict), 
+                201
+            )
 
         except ValueError as ve:
             print(f"Value error: {ve}")
@@ -75,8 +103,9 @@ class RecipeResource(Resource):
             return make_response(jsonify({"error": "Missing required fields"}), 400)
         except Exception as e:
             print(f"Error creating recipe: {e}")
+            db.session.rollback()
             return make_response(jsonify({"error": "Unable to create recipe"}), 500)
-        
+
 class RecipeByID(Resource):
 
     def get(self, id):

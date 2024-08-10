@@ -8,6 +8,10 @@ app = Flask(__name__)
 config_name = os.getenv('FLASK_CONFIG', 'default')
 app.config.from_object(config[config_name])
 
+upload_folder = app.config['UPLOAD_FOLDER']
+if not os.path.exists(upload_folder):
+    os.makedirs(upload_folder)
+
 db.init_app(app)
 migrate.init_app(app, db)
 
