@@ -1,18 +1,9 @@
-<<<<<<< HEAD
-from backend.database import db
-
-class User(db.Model):
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-
-    recipe = db.relationship('Recipe', back_populates='user')
-=======
 from flask_bcrypt import Bcrypt
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
 from sqlalchemy_serializer import SerializerMixin
 
-from database import db
+from backend.database import db
 
 bcrypt = Bcrypt()
 
@@ -97,4 +88,3 @@ class User(db.Model, SerializerMixin):
     #     if User.query.filter_by(username=value).first():
     #         raise ValueError("Username must be unique")
     #     return value
->>>>>>> origin/brianf
