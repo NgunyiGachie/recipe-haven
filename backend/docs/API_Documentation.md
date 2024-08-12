@@ -11,21 +11,147 @@ This API allows users to manage recipes, ingredients, cooking hacks, cooking tip
 - **Description**: Retrieve a list of all recipes.
 - **Response**:
     ```json
-    [
+   [
         {
-            "id": 1,
-            "title": "Pilau",
-            "description": "A classic Kenyan dish made with rice.",
-            "prep_time": 15,
-            "cook_time": 20,
-            "servings": 4,
-            "skill_level": "Medium",
-            "country": "Kenya",
-            "diet": "Vegetarian",
-            "instructions": "1. Boil Rice. 2. Cook Onions. 3. Fry Tomatoes. 4. Combine all ingredients.",
-            "image_url": "http://example.com/spaghetti.jpg",
-            "user_id": 1,
-            "created_at": "2024-08-07T00:00:00"
+        "Images": [
+        {
+        "id": 1,
+        "image_url": "http://example.com/spaghetti1.jpg",
+        "recipe_id": 1
+        },
+        {
+        "id": 2,
+        "image_url": "http://example.com/spaghetti2.jpg",
+        "recipe_id": 1
+        }
+        ],
+        "banner_image": "http://example.com/spaghetti.jpg",
+        "cook_time": 20,
+        "country": "Kenya",
+        "created_at": "2024-08-07T00:00:00",
+        "description": "A classic Kenyan dish made with rice.",
+        "diet": "Vegetarian",
+        "id": 1,
+        "ingredients": [
+        {
+        "id": 1,
+        "image": "http://example.com/spaghetti.jpg",
+        "name": "Spaghetti",
+        "recipe_id": 1
+        },
+        {
+        "id": 2,
+        "image": "http://example.com/pancetta.jpg",
+        "name": "Pancetta",
+        "recipe_id": 1
+        }
+        ],
+        "instructions": "1. Boil Rice. 2. Cook Onions. 3. Fry Tomatoes. 4. Combine all ingredients.",
+        "prep_time": 15,
+        "servings": 4,
+        "skill_level": "Medium",
+        "title": "Pilau",
+        "user_id": 1
+        },
+        {
+        "Images": [
+        {
+        "id": 3,
+        "image_url": "http://example.com/curry1.jpg",
+        "recipe_id": 2
+        },
+        {
+        "id": 4,
+        "image_url": "http://example.com/curry2.jpg",
+        "recipe_id": 2
+        }
+        ],
+        "banner_image": "http://example.com/curry.jpg",
+        "cook_time": 40,
+        "country": "India",
+        "created_at": "2024-08-07T00:00:00",
+        "description": "A spicy and flavorful chicken curry with coconut milk and aromatic spices.",
+        "diet": "Non-Vegetarian",
+        "id": 2,
+        "ingredients": [
+        {
+        "id": 3,
+        "image": "http://example.com/chicken.jpg",
+        "name": "Chicken",
+        "recipe_id": 2
+        },
+        {
+        "id": 4,
+        "image": "http://example.com/coconut_milk.jpg",
+        "name": "Coconut Milk",
+        "recipe_id": 2
+        }
+        ],
+        "instructions": "1. Cook chicken with spices. 2. Add coconut milk and simmer. 3. Serve with rice.",
+        "prep_time": 20,
+        "servings": 4,
+        "skill_level": "Hard",
+        "title": "Chicken Curry",
+        "user_id": 2
+        },
+        {
+        "Images": [],
+        "banner_image": "http://example.com/spaghetti.jpg",
+        "cook_time": 30,
+        "country": "Italy",
+        "created_at": "2024-07-10T12:00:00",
+        "description": "Classic italian meal made of",
+        "diet": "Vegetarian",
+        "id": 3,
+        "ingredients": [],
+        "instructions": "Cook pasta. Make Sauce",
+        "prep_time": 15,
+        "servings": 4,
+        "skill_level": "Medium",
+        "title": "Spaghetti ",
+        "user_id": 1
+        },
+        {
+        "Images": [
+        {
+        "id": 5,
+        "image_url": "http://example.com/image1.jpg",
+        "recipe_id": 4
+        }
+        ],
+        "banner_image": "http://example.com/spaghetti.jpg",
+        "cook_time": 30,
+        "country": "Italy",
+        "created_at": "2024-07-10T12:00:00",
+        "description": "Classic italian meal made of",
+        "diet": "Vegetarian",
+        "id": 4,
+        "ingredients": [
+        {
+        "id": 5,
+        "image": "http://example.com/flour.jpg",
+        "name": "Flour",
+        "recipe_id": 4
+        },
+        {
+        "id": 6,
+        "image": "http://example.com/beef.jpg",
+        "name": "beef",
+        "recipe_id": 4
+        },
+        {
+        "id": 7,
+        "image": "http://example.com/tomato.jpg",
+        "name": "pork",
+        "recipe_id": 4
+        }
+        ],
+        "instructions": "Cook pasta. Make Sauce",
+        "prep_time": 15,
+        "servings": 4,
+        "skill_level": "Medium",
+        "title": "Spaghetti ",
+        "user_id": 1
         }
     ]
     ```
@@ -51,19 +177,46 @@ This API allows users to manage recipes, ingredients, cooking hacks, cooking tip
 - **Response**:
     ```json
     {
-        "id": 1,
-        "title": "Pilau",
-        "description": "A classic Kenyan dish made with rice.",
+        "Images": [
+            {
+                "id": 5,
+                "image_url": "http://example.com/image1.jpg",
+                "recipe_id": 4
+            }
+        ],
+        "banner_image": "http://example.com/spaghetti.jpg",
+        "cook_time": 30,
+        "country": "Italy",
+        "created_at": "2024-07-10T12:00:00",
+        "description": "Classic italian meal made of",
+        "diet": "Vegetarian",
+        "id": 4,
+        "ingredients": [
+            {
+                "id": 5,
+                "image": "http://example.com/flour.jpg",
+                "name": "Flour",
+                "recipe_id": 4
+            },
+            {
+                "id": 6,
+                "image": "http://example.com/beef.jpg",
+                "name": "beef",
+                "recipe_id": 4
+            },
+            {
+                "id": 7,
+                "image": "http://example.com/tomato.jpg",
+                "name": "pork",
+                "recipe_id": 4
+            }
+        ],
+        "instructions": "Cook pasta. Make Sauce",
         "prep_time": 15,
-        "cook_time": 20,
         "servings": 4,
         "skill_level": "Medium",
-        "country": "Kenya",
-        "diet": "Vegetarian",
-        "instructions": "1. Boil Rice. 2. Cook Onions. 3. Fry Tomatoes. 4. Combine all ingredients.",
-        "image_url": "http://example.com/spaghetti.jpg",
-        "user_id": 1,
-        "created_at": "2024-08-07T00:00:00"
+        "title": "Spaghetti ",
+        "user_id": 1
     }
     ```
 - **Errors**:
@@ -76,13 +229,39 @@ This API allows users to manage recipes, ingredients, cooking hacks, cooking tip
 - **Response**:
     ```json
     {
+        "Images": [
+            {
+            "id": 1,
+            "image_url": "http://example.com/spaghetti1.jpg",
+            "recipe_id": 1
+            },
+            {
+            "id": 2,
+            "image_url": "http://example.com/spaghetti2.jpg",
+            "recipe_id": 1
+            }
+        ],
+        "banner_image": "http://example.com/spaghetti.jpg",
         "cook_time": 20,
         "country": "Kenya",
         "created_at": "2024-08-07T00:00:00",
         "description": "A classic Kenyan dish made with rice.",
         "diet": "Vegetarian",
         "id": 1,
-        "image_url": "http://example.com/spaghetti.jpg",
+        "ingredients": [
+            {
+            "id": 1,
+            "image": "http://example.com/spaghetti.jpg",
+            "name": "Spaghetti",
+            "recipe_id": 1
+            },
+            {
+            "id": 2,
+            "image": "http://example.com/pancetta.jpg",
+            "name": "Pancetta",
+            "recipe_id": 1
+            }
+        ],
         "instructions": "1. Boil Rice. 2. Cook Onions. 3. Fry Tomatoes. 4. Combine all ingredients.",
         "prep_time": 15,
         "servings": 4,
@@ -145,22 +324,45 @@ This API allows users to manage recipes, ingredients, cooking hacks, cooking tip
     [
         {
             "id": 1,
-            "name": "Spaghetti",
             "image": "http://example.com/spaghetti.jpg",
-            "recipe": {
-                "id": 1,
-                "title": "Spaghetti Bolognese",
-                "description": "A delicious Italian dish.",
-                "cook_time": 30,
-                "prep_time": 15,
-                "country": "Italy",
-                "diet": "Non-Vegetarian",
-                "instructions": "1. Cook spaghetti. 2. Prepare sauce. 3. Mix together.",
-                "image_url": "http://example.com/spaghetti.jpg",
-                "servings": 4,
-                "skill_level": "Medium",
-                "created_at": "2024-08-07T00:00:00"
-            }
+            "name": "Spaghetti",
+            "recipe_id": 1
+        },
+        {
+            "id": 2,
+            "image": "http://example.com/pancetta.jpg",
+            "name": "Pancetta",
+            "recipe_id": 1
+        },
+        {
+            "id": 3,
+            "image": "http://example.com/chicken.jpg",
+            "name": "Chicken",
+            "recipe_id": 2
+        },
+        {
+            "id": 4,
+            "image": "http://example.com/coconut_milk.jpg",
+            "name": "Coconut Milk",
+            "recipe_id": 2
+        },
+        {
+            "id": 5,
+            "image": "http://example.com/flour.jpg",
+            "name": "Flour",
+            "recipe_id": 4
+        },
+        {
+            "id": 6,
+            "image": "http://example.com/beef.jpg",
+            "name": "beef",
+            "recipe_id": 4
+        },
+        {
+            "id": 7,
+            "image": "http://example.com/tomato.jpg",
+            "name": "pork",
+            "recipe_id": 4
         }
     ]
     ```
@@ -178,24 +380,12 @@ This API allows users to manage recipes, ingredients, cooking hacks, cooking tip
 - **Response**:
     ```json
     {
-        "id": 1,
-        "name": "Spaghetti",
-        "image": "http://example.com/spaghetti.jpg",
-        "recipe": {
-            "id": 1,
-            "title": "Spaghetti Bolognese",
-            "description": "A delicious Italian dish.",
-            "cook_time": 30,
-            "prep_time": 15,
-            "country": "Italy",
-            "diet": "Non-Vegetarian",
-            "instructions": "1. Cook spaghetti. 2. Prepare sauce. 3. Mix together.",
-            "image_url": "http://example.com/spaghetti.jpg",
-            "servings": 4,
-            "skill_level": "Medium",
-            "created_at": "2024-08-07T00:00:00"
-        }
+        "id": 8,
+        "image": "http://example.com/images/tomato.jpg",
+        "name": "Kachumbari",
+        "recipe_id": 1
     }
+      
     ```
 - **Errors**:
     - `400 Bad Request`: Missing required fields.
@@ -207,25 +397,12 @@ This API allows users to manage recipes, ingredients, cooking hacks, cooking tip
 - **Response**:
     ```json
     {
-    "id": 1,
-    "image": "http://example.com/spaghetti.jpg",
-    "name": "Spaghetti",
-    "recipe": {
-        "cook_time": 20,
-        "country": "Kenya",
-        "created_at": "2024-08-07T00:00:00",
-        "description": "A classic Kenyan dish made with rice.",
-        "diet": "Vegetarian",
-        "id": 1,
-        "image_url": "http://example.com/spaghetti.jpg",
-        "instructions": "1. Boil Rice. 2. Cook Onions. 3. Fry Tomatoes. 4. Combine all ingredients.",
-        "prep_time": 15,
-        "servings": 4,
-        "skill_level": "Medium",
-        "title": "Pilau",
-        "user_id": 1
-        }
+        "id": 8,
+        "image": "http://example.com/images/tomato.jpg",
+        "name": "Kachumbari",
+        "recipe_id": 1
     }
+   
     ```
 
 #### PATCH /ingredients/{id}
@@ -241,23 +418,11 @@ This API allows users to manage recipes, ingredients, cooking hacks, cooking tip
     ```json
     {
         "id": 1,
-        "name": "Updated Ingredient Name",
         "image": "http://example.com/updated_image.jpg",
-        "recipe": {
-            "id": 1,
-            "title": "Spaghetti Bolognese",
-            "description": "A delicious Italian dish.",
-            "cook_time": 30,
-            "prep_time": 15,
-            "country": "Italy",
-            "diet": "Non-Vegetarian",
-            "instructions": "1. Cook spaghetti. 2. Prepare sauce. 3. Mix together.",
-            "image_url": "http://example.com/spaghetti.jpg",
-            "servings": 4,
-            "skill_level": "Medium",
-            "created_at": "2024-08-07T00:00:00"
-        }
+        "name": "Updated Ingredient Name",
+        "recipe_id": 1
     }
+     
     ```
 - **Errors**:
     - `404 Not Found`: Ingredient not found.
@@ -457,78 +622,27 @@ This API allows users to manage recipes, ingredients, cooking hacks, cooking tip
         {
             "id": 1,
             "image_url": "http://example.com/spaghetti1.jpg",
-            "recipe": {
-                "cook_time": 20,
-                "country": "Kenya",
-                "created_at": "2024-08-07T00:00:00",
-                "description": "A classic Kenyan dish made with rice.",
-                "diet": "Vegetarian",
-                "id": 1,
-                "image_url": "http://example.com/spaghetti.jpg",
-                "instructions": "1. Boil Rice. 2. Cook Onions. 3. Fry Tomatoes. 4. Combine all ingredients.",
-                "prep_time": 15,
-                "servings": 4,
-                "skill_level": "Medium",
-                "title": "Pilau",
-                "user_id": 1
-            }
+            "recipe_id": 1
         },
         {
             "id": 2,
             "image_url": "http://example.com/spaghetti2.jpg",
-            "recipe": {
-                "cook_time": 20,
-                "country": "Kenya",
-                "created_at": "2024-08-07T00:00:00",
-                "description": "A classic Kenyan dish made with rice.",
-                "diet": "Vegetarian",
-                "id": 1,
-                "image_url": "http://example.com/spaghetti.jpg",
-                "instructions": "1. Boil Rice. 2. Cook Onions. 3. Fry Tomatoes. 4. Combine all ingredients.",
-                "prep_time": 15,
-                "servings": 4,
-                "skill_level": "Medium",
-                "title": "Pilau",
-                "user_id": 1
-            }
+            "recipe_id": 1
         },
         {
             "id": 3,
             "image_url": "http://example.com/curry1.jpg",
-            "recipe": {
-                "cook_time": 40,
-                "country": "India",
-                "created_at": "2024-08-07T00:00:00",
-                "description": "A spicy and flavorful chicken curry with coconut milk and aromatic spices.",
-                "diet": "Non-Vegetarian",
-                "id": 2,
-                "image_url": "http://example.com/curry.jpg",
-                "instructions": "1. Cook chicken with spices. 2. Add coconut milk and simmer. 3. Serve with rice.",
-                "prep_time": 20,
-                "servings": 4,
-                "skill_level": "Hard",
-                "title": "Chicken Curry",
-                "user_id": 2
-            }
+            "recipe_id": 2
         },
         {
             "id": 4,
             "image_url": "http://example.com/curry2.jpg",
-            "recipe": {
-                "cook_time": 40,
-                "country": "India",
-                "created_at": "2024-08-07T00:00:00",
-                "description": "A spicy and flavorful chicken curry with coconut milk and aromatic spices.",
-                "diet": "Non-Vegetarian",
-                "id": 2,
-                "image_url": "http://example.com/curry.jpg",
-                "instructions": "1. Cook chicken with spices. 2. Add coconut milk and simmer. 3. Serve with rice.",
-                "prep_time": 20,
-                "servings": 4,
-                "skill_level": "Hard",
-                "title": "Chicken Curry",
-                "user_id": 2
-            }
+            "recipe_id": 2
+        },
+        {
+            "id": 5,
+            "image_url": "http://example.com/image1.jpg",
+            "recipe_id": 4
         }
     ]
     ```
@@ -538,31 +652,18 @@ This API allows users to manage recipes, ingredients, cooking hacks, cooking tip
 - **Request**:
     ```json
     {
-        "url": "http://example.com/image.jpg",
-        "recipe_id": "1."
+        "url": "http://example.com/spaghetti5.jpg",
+        "recipe_id": "2"
     }
     ```
 - **Response**:
     ```json
     {
-        "id": 5,
-        "image_url": "http://example.com/image.jpg",
-        "recipe": {
-            "cook_time": 20,
-            "country": "Kenya",
-            "created_at": "2024-08-07T00:00:00",
-            "description": "A classic Kenyan dish made with rice.",
-            "diet": "Vegetarian",
-            "id": 1,
-            "image_url": "http://example.com/spaghetti.jpg",
-            "instructions": "1. Boil Rice. 2. Cook Onions. 3. Fry Tomatoes. 4. Combine all ingredients.",
-            "prep_time": 15,
-            "servings": 4,
-            "skill_level": "Medium",
-            "title": "Pilau",
-            "user_id": 1
-        }
+        "id": 6,
+        "image_url": "http://example.com/spaghetti5.jpg",
+        "recipe_id": 2
     }
+        
     ```
 - **Errors**:
     - `400 Bad Request`: Missing required fields.
@@ -575,23 +676,10 @@ This API allows users to manage recipes, ingredients, cooking hacks, cooking tip
     ```json
     {
         "id": 1,
-        "image_url": "http://example.com/updated_image.jpg",
-        "recipe": {
-            "cook_time": 20,
-            "country": "Kenya",
-            "created_at": "2024-08-07T00:00:00",
-            "description": "A classic Kenyan dish made with rice.",
-            "diet": "Vegetarian",
-            "id": 1,
-            "image_url": "http://example.com/spaghetti.jpg",
-            "instructions": "1. Boil Rice. 2. Cook Onions. 3. Fry Tomatoes. 4. Combine all ingredients.",
-            "prep_time": 15,
-            "servings": 4,
-            "skill_level": "Medium",
-            "title": "Pilau",
-            "user_id": 1
-            }
+        "image_url": "http://example.com/spaghetti1.jpg",
+        "recipe_id": 1
     }
+     
     ```
 
 #### PATCH /images/{id}
@@ -606,24 +694,11 @@ This API allows users to manage recipes, ingredients, cooking hacks, cooking tip
 - **Response**:
     ```json
     {
-    "id": 1,
-    "image_url": "http://example.com/updated_image.jpg",
-    "recipe": {
-        "cook_time": 20,
-        "country": "Kenya",
-        "created_at": "2024-08-07T00:00:00",
-        "description": "A classic Kenyan dish made with rice.",
-        "diet": "Vegetarian",
         "id": 1,
-        "image_url": "http://example.com/spaghetti.jpg",
-        "instructions": "1. Boil Rice. 2. Cook Onions. 3. Fry Tomatoes. 4. Combine all ingredients.",
-        "prep_time": 15,
-        "servings": 4,
-        "skill_level": "Medium",
-        "title": "Pilau",
-        "user_id": 1
-        }
+        "image_url": "http://example.com/updated_image.jpg",
+        "recipe_id": 1
     }
+    
     ```
 - **Errors**:
     - `404 Not Found`: Image not found.
@@ -650,9 +725,26 @@ This API allows users to manage recipes, ingredients, cooking hacks, cooking tip
     ```json
     [
         {
+            "id": 1,
+            "reply": "Thanks for your review! We're glad you enjoyed the recipe.",
+            "review": {
+                "created_at": "2024-08-07 00:00:00",
+                "recipe_id": 1,
+                "review": "Great recipe!",
+                "updated_at": null,
+                "user_id": 1
+            }
+        },
+        {
             "id": 2,
             "reply": "We're sorry to hear that. We will work on improving it.",
-            "review_id": 2
+            "review": {
+                "created_at": "2024-08-07 00:00:00",
+                "recipe_id": 1,
+                "review": "Tasty, but could use more spices.",
+                "updated_at": null,
+                "user_id": 2
+            }
         }
     ]
     ```
@@ -669,15 +761,14 @@ This API allows users to manage recipes, ingredients, cooking hacks, cooking tip
 - **Response**:
     ```json
     {
-        "id": 1,
-        "reply": "Your recipe is a life saver",
+        "id": 3,
+        "reply": "I really liked the tomatoes",
         "review": {
-            "id": 2,
-            "user_id": 3,
-            "recipe_id": 4,
-            "review": "Great recipe!",
-            "created_at": "2024-08-08T00:00:00",
-            "updated_at": "2024-08-08T00:00:00"
+            "created_at": "2024-08-07 00:00:00",
+            "recipe_id": 1,
+            "review": "Tasty, but could use more spices.",
+            "updated_at": null,
+            "user_id": 2
         }
     }
 
@@ -691,19 +782,17 @@ This API allows users to manage recipes, ingredients, cooking hacks, cooking tip
 - **Description**: Get an existing reply.
 - **Request**:
     ```json
-    {
-        "id": 2,
-        "reply": "We're sorry to hear that. We will work on improving it.",
+   {
+        "id": 1,
+        "reply": "Thanks for your review! We're glad you enjoyed the recipe.",
         "review": {
-            "id": 2,
-            "user_id": 3,
-            "recipe_id": 4,
-            "review": "The recipe was a bit too salty.",
-            "created_at": "2024-08-08T00:00:00",
-            "updated_at": "2024-08-08T00:00:00"
+            "created_at": "2024-08-07 00:00:00",
+            "recipe_id": 1,
+            "review": "Great recipe!",
+            "updated_at": null,
+            "user_id": 1
         }
     }
-
     ```
 #### PATCH /replies/{id}
 - **Description**: Update an existing reply.
@@ -717,15 +806,14 @@ This API allows users to manage recipes, ingredients, cooking hacks, cooking tip
 - **Response**:
     ```json
     {
-        "id": 3,
+        "id": 2,
         "reply": "Your recipe is a life saver",
         "review": {
-            "id": 3,
-            "user_id": 2,
-            "recipe_id": 5,
-            "review": "This recipe was great, but I had to adjust the seasoning.",
-            "created_at": "2024-08-07T00:00:00",
-            "updated_at": "2024-08-07T00:00:00"
+            "created_at": "2024-08-07 00:00:00",
+            "recipe_id": 2,
+            "review": "Delicious and easy to make!",
+            "updated_at": null,
+            "user_id": 3
         }
     }
 
