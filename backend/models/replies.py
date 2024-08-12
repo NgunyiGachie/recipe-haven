@@ -8,13 +8,14 @@ class Replies(db.Model):
 
     review = db.relationship('Review', back_populates='replies')
 
-    def to_dict(self, include_review=False):
+    def to_dict(self, include_review=True):
         data = {
             'id': self.id,
             'reply': self.reply,
             'review': self.review.to_dict() if include_review and self.review else None
         }
         return data
+
 
     def __repr__(self):
         return f'<Replies {self.reply}, ID: {self.id}>'

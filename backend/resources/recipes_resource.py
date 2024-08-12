@@ -5,8 +5,6 @@ from flask_restful import Resource
 from backend.models.recipes import Recipe
 from backend.models.ingredients import Ingredient
 from backend.models.images import Image
-from backend.models.user import User
-from backend.utils import save_image
 from backend.database import db
 
 class RecipeResource(Resource):
