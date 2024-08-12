@@ -8,7 +8,7 @@ class Ingredient(db.Model):
     name = db.Column(db.String(100), nullable=False)
     image = db.Column(db.String(255))
 
-    recipes = db.relationship('Recipe', back_populates='ingredients')
+    recipe = db.relationship('Recipe', back_populates='ingredients')
 
     @validates('name')
     def validate_name(self, key, value):
@@ -21,7 +21,7 @@ class Ingredient(db.Model):
             'id': self.id,
             'name': self.name,
             'image': self.image,
-            'recipe': self.recipe.to_dict() if self.recipe else None
+            'recipe_id': self.recipe_id,
         }
     
     def __repr__(self):

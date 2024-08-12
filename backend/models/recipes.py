@@ -20,8 +20,8 @@ class Recipe(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)
 
     user = db.relationship('User', back_populates='recipes')
-    ingredients = db.relationship('Ingredient', back_populates='recipes')
-    images = db.relationship('Image', back_populates='recipes', cascade='all, delete-orphan')
+    ingredients = db.relationship('Ingredient', back_populates='recipe')
+    images = db.relationship('Image', back_populates='recipe', cascade='all, delete-orphan')
     ratings = db.relationship("Rating", back_populates="recipe", cascade="all, delete-orphan")
     bookmarks = db.relationship("Bookmark", back_populates="recipe", cascade="all, delete-orphan")
     reviews = db.relationship("Review", back_populates="recipe", cascade="all, delete-orphan")
@@ -53,7 +53,7 @@ class Recipe(db.Model):
         return value
 
     def to_dict(self):
-        return{
+        return {
             'id': self.id,
             'user_id': self.user_id,
             'title': self.title,
@@ -64,9 +64,11 @@ class Recipe(db.Model):
             'cook_time': self.cook_time,
             'servings': self.servings,
             'diet': self.diet,
-            'banner_image': self.banner_image,
             'skill_level': self.skill_level,
-            'created_at': self.created_at.isoformat() if self.created_at else None
+            'banner_image': self.banner_image,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'ingredients': [ingredient.to_dict() for ingredient in self.ingredients],
+            "Images" : [image.to_dict() for image in self.images]
         }
 
     def __repr__(self):

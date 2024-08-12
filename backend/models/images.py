@@ -6,13 +6,13 @@ class Image(db.Model):
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'), nullable=False)
     image_url = db.Column(db.String(255))
 
-    recipes = db.relationship('Recipe', back_populates='images')
+    recipe = db.relationship('Recipe', back_populates='images')
 
     def to_dict(self):
         return{
             'id': self.id,
             'image_url': self.image_url,
-            'recipe': self.recipe.to_dict() if self.recipe else None
+            'recipe_id': self.recipe_id,
         }
     
     def __repr__(self):

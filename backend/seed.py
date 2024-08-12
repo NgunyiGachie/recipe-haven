@@ -25,6 +25,7 @@ with app.app_context():
     db.drop_all()
     db.create_all()
 
+    # Seed users
     users = [
         User(username='user1', first_name='Anthony', last_name='Gachie', email='user1@example.com', country='Kenya'),
         User(username='user2', first_name='Ben', last_name='Gitau', email='user2@example.com', country='Uganda'),
@@ -34,20 +35,12 @@ with app.app_context():
     ]
     
     for user, password in zip(users, ['password1', 'password2', 'password3', 'password4', 'password5']):
-        user.password_hash = password 
+        user.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
   
     db.session.add_all(users)
     db.session.commit()
 
-    reviews = [
-        Review(id=1, user_id=1, recipe_id=1, review='Great recipe!', created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')),
-        Review(id=2, user_id=2, recipe_id=1, review='Tasty, but could use more spices.', created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')),
-        Review(id=3, user_id=3, recipe_id=2, review='Delicious and easy to make!', created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')),
-        Review(id=4, user_id=4, recipe_id=2, review='Too spicy for my taste.', created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')),
-    ]
-    db.session.add_all(reviews)
-    db.session.commit()
-
+    # Seed recipes
     recipes = [
         Recipe(
             user_id=1,
@@ -81,14 +74,61 @@ with app.app_context():
     db.session.add_all(recipes)
     db.session.commit()
 
+    # Seed reviews
+    reviews = [
+        Review(user_id=1, recipe_id=1, review='Great recipe!', created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')),
+        Review(user_id=2, recipe_id=1, review='Tasty, but could use more spices.', created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')),
+        Review(user_id=3, recipe_id=2, review='Delicious and easy to make!', created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')),
+        Review(user_id=4, recipe_id=2, review='Too spicy for my taste.', created_at=datetime.strptime('2024-08-07T00:00:00', '%Y-%m-%dT%H:%M:%S')),
+    ]
+    db.session.add_all(reviews)
+    db.session.commit()
+
+    # Seed images
+    images = [
+        Image(recipe_id=1, image_url='http://example.com/spaghetti1.jpg'),
+        Image(recipe_id=1, image_url='http://example.com/spaghetti2.jpg'),
+        Image(recipe_id=2, image_url='http://example.com/curry1.jpg'),
+        Image(recipe_id=2, image_url='http://example.com/curry2.jpg'),
+    ]
+    db.session.add_all(images)
+    db.session.commit()
+
+    # Seed ingredients
+    ingredients = [
+        Ingredient(recipe_id=1, name='Spaghetti', image='http://example.com/spaghetti.jpg'),
+        Ingredient(recipe_id=1, name='Pancetta', image='http://example.com/pancetta.jpg'),
+        Ingredient(recipe_id=2, name='Chicken', image='http://example.com/chicken.jpg'),
+        Ingredient(recipe_id=2, name='Coconut Milk', image='http://example.com/coconut_milk.jpg'),
+    ]
+    db.session.add_all(ingredients)
+    db.session.commit()
+
+    # Seed replies
+    replies = [
+        Replies(review_id=1, reply='Thanks for your review! We\'re glad you enjoyed the recipe.'),
+        Replies(review_id=2, reply='We\'re sorry to hear that. We will work on improving it.'),
+    ]
+    db.session.add_all(replies)
+    db.session.commit()
+
+    # Seed bookmarks
+    bookmarks = [
+        Bookmark(user_id=1, recipe_id=1),
+        Bookmark(user_id=2, recipe_id=2),
+    ]
+    db.session.add_all(bookmarks)
+    db.session.commit()
+
+    # Seed cooking hacks
     cooking_hacks = [
         CookingHacks(content='To prevent pasta from sticking, add a little oil to the water.'),
         CookingHacks(content='To keep herbs fresh, store them in a jar with a bit of water and cover with a plastic bag.'),
     ]
     db.session.add_all(cooking_hacks)
     db.session.commit()
-    print("Cooking hacks seeded successfully.")
 
+    # Seed cooking tips
     cooking_tips = [
         CookingTips(
             title='How to cook perfect rice',
@@ -105,58 +145,21 @@ with app.app_context():
     ]
     db.session.add_all(cooking_tips)
     db.session.commit()
-    print("Cooking tips seeded successfully.")
 
-    images = [
-        Image(recipe_id=1, image_url='http://example.com/spaghetti1.jpg'),
-        Image(recipe_id=1, image_url='http://example.com/spaghetti2.jpg'),
-        Image(recipe_id=2, image_url='http://example.com/curry1.jpg'),
-        Image(recipe_id=2, image_url='http://example.com/curry2.jpg'),
-    ]
-    db.session.add_all(images)
-    db.session.commit()
-    print("Images seeded successfully.")
-
-    ingredients = [
-        Ingredient(recipe_id=1, name='Spaghetti', image='http://example.com/spaghetti.jpg'),
-        Ingredient(recipe_id=1, name='Pancetta', image='http://example.com/pancetta.jpg'),
-        Ingredient(recipe_id=2, name='Chicken', image='http://example.com/chicken.jpg'),
-        Ingredient(recipe_id=2, name='Coconut Milk', image='http://example.com/coconut_milk.jpg'),
-    ]
-    db.session.add_all(ingredients)
-    db.session.commit()
-    print("Ingredients seeded successfully.")
-
-    replies = [
-        Replies(review_id=1, reply='Thanks for your review! We\'re glad you enjoyed the recipe.'),
-        Replies(review_id=2, reply='We\'re sorry to hear that. We will work on improving it.'),
-    ]
-    db.session.add_all(replies)
-    db.session.commit()
-    print("Replies seeded successfully.")
-
-    bookmarks = [
-        Bookmark(id=1, user_id=1, recipe_id=1),
-        Bookmark(id=2, user_id=2, recipe_id=2),
-    ]
-    db.session.add_all(bookmarks)
-    db.session.commit()
-    print("Bookmarks seeded successfully.")
-
+    # Seed news
     news_items = [
-        News(id=1, image_url='http://example.com/news1.jpg', content='Breaking: New recipe trends for 2024!', link='http://example.com/news1'),
-        News(id=2, image_url='http://example.com/news2.jpg', content='Top 10 kitchen gadgets you need to try.', link='http://example.com/news2'),
+        News(image_url='http://example.com/news1.jpg', content='Breaking: New recipe trends for 2024!', link='http://example.com/news1'),
+        News(image_url='http://example.com/news2.jpg', content='Top 10 kitchen gadgets you need to try.', link='http://example.com/news2'),
     ]
     db.session.add_all(news_items)
     db.session.commit()
-    print("News seeded successfully.")
 
+    # Seed ratings
     ratings = [
-        Rating(id=1, user_id=1, recipe_id=1, rating=4),
-        Rating(id=2, user_id=2, recipe_id=1, rating=3),
-        Rating(id=3, user_id=3, recipe_id=2, rating=5),
-        Rating(id=4, user_id=4, recipe_id=2, rating=2),
+        Rating(user_id=1, recipe_id=1, rating=4),
+        Rating(user_id=2, recipe_id=1, rating=3),
+        Rating(user_id=3, recipe_id=2, rating=5),
+        Rating(user_id=4, recipe_id=2, rating=2),
     ]
     db.session.add_all(ratings)
     db.session.commit()
-    print("Ratings seeded successfully.")
