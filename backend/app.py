@@ -55,9 +55,6 @@ api.add_resource(IngredientsByID, '/ingredients/<int:id>', endpoint='ingredients
 api.add_resource(RepliesResource, '/replies', endpoint='replies')
 api.add_resource(RepliesByID, '/replies/<int:id>', endpoint='replies_by_id')
 
-upload_folder = app.config['UPLOAD_FOLDER']
-if not os.path.exists(upload_folder):
-    os.makedirs(upload_folder)
 
 if __name__ == '__main__':
     try:
