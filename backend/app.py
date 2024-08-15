@@ -9,6 +9,7 @@ from flask_restful import Api
 from backend.config import config
 from backend.database import db
 
+
 app = Flask(__name__)
 
 config_name = os.getenv("FLASK_CONFIG", "default")

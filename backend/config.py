@@ -15,7 +15,7 @@ class Config:
     OPENAPI_SWAGGER_UI_PATH = "/swagger-ui"
     OPENAPI_SWAGGER_UI_URL = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres.lwfpwzgjbdlfctlgfunl:Nfee84AsEJMajB!@aws-0-eu-west-2.pooler.supabase.com:6543/postgres'
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///recipe_app.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JWT_SECRET_KEY = "your_jwt_secret_key"
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=15)
