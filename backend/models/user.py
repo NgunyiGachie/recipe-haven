@@ -11,17 +11,6 @@ bcrypt = Bcrypt()
 class User(db.Model):
     __tablename__ = "users"
 
-    # # Specify the fields to serialize
-    # serialize_rules = (
-    #     "-recipes.user",
-    #     "-ratings.user",
-    #     "-bookmarks.user",
-    #     "-_password_hash",
-    #     "-ratings.recipe",
-    #     "-reviews.user",
-    #     "-reviews.recipe",
-    # )
-
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
     first_name = db.Column(db.String(80), nullable=False)
